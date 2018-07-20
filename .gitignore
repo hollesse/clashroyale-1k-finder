@@ -3,4 +3,4 @@ notified-games.pkl
 clashroyale-josh.cfg
 *.log
 .idea/
-__pychache__
+__pychache__/*
