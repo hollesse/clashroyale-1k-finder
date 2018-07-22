@@ -1,4 +1,6 @@
 import logging
+
+from PushMeNotificationService import PushMeNotificationService
 from PushbulletNotificationService import PushbulletNotificationService
 from PushoverNotificationService import PushoverNotificationService
 
@@ -28,6 +30,8 @@ class Device:
             return PushbulletNotificationService(api_key, device_identifier)
         elif notification_service_name == 'Pushover':
             return PushoverNotificationService(api_key, device_identifier)
+        elif notification_service_name == 'PushMe':
+            return PushMeNotificationService(device_identifier)
         else:
             logging.error('Notification Service "%s" does not exist!', notification_service_name)
             exit(1)

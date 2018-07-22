@@ -2,6 +2,7 @@ import configparser as configparser
 import logging
 
 from Device import Device
+from PushMeConfigReader import PushMeConfigReader
 from PushbulletConfigReader import PushbulletConfigReader
 from PushoverConfigReader import PushoverConfigReader
 
@@ -45,5 +46,6 @@ class Config:
 
     def get_config_reader(self, notification_service_name):
         return {"Pushbullet": PushbulletConfigReader(self._config),
-                "Pushover": PushoverConfigReader(self._config)
+                "Pushover": PushoverConfigReader(self._config),
+                "PushMe": PushMeConfigReader(self._config)
                 }.get(notification_service_name)
