@@ -2,6 +2,8 @@ import configparser as configparser
 import logging
 
 from Device import Device
+from PushbulletConfigReader import PushbulletConfigReader
+from PushoverConfigReader import PushoverConfigReader
 
 
 class Config:
@@ -33,26 +35,15 @@ class Config:
                               'notification_service_' + str(count_devices+1))
             except configparser.NoOptionError:
                 break
-
-            try:
-                api_key = self._config.get('Devices', 'api_key_' + str(count_devices+1))
-                logging.debug('Reading api key: "%s" from config "%s"',
-                              api_key,
-                              'api_key_' + str(count_devices+1))
-            except configparser.NoOptionError:
-                break
-
-            try:
-                device_identifier = self._config.get('Devices', 'device_identifier_' + str(count_devices+1))
-                logging.info('Reading device identifier: "%s from config "%s"',
-                             device_identifier,
-                             'device_identifier_' + str(count_devices + 1))
-            except configparser.NoOptionError:
-                break
-
-            self._device_list.append(Device(api_key, device_identifier, str(notification_service_name)))
+            config_reader = self.get_config_reader(notification_service_name)
+            self._device_list.append(config_reader.get_device(count_devices+1))
             count_devices += 1
         logging.info('%s devices found!', count_devices)
 
     def device_list(self):
         return self._device_list
+
+    def get_config_reader(self, notification_service_name):
+        return {"Pushbullet": PushbulletConfigReader(self._config),
+                "Pushover": PushoverConfigReader(self._config)
+                }.get(notification_service_name)

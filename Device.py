@@ -5,10 +5,9 @@ from PushoverNotificationService import PushoverNotificationService
 
 class Device:
 
-    def __init__(self, api_key, device_identifier, notification_service_name):
-        self._notification_service = Device.new_notification_service(api_key,
-                                                                     device_identifier,
-                                                                     notification_service_name)
+    def __init__(self, notification_service_name, device_identifier, api_key=''):
+        self._notification_service = Device.new_notification_service(notification_service_name, device_identifier,
+                                                                     api_key)
 
     def send_notification(self, tournament):
         self._notification_service.send_notification('1K Tournament found!', 'Name: ' + tournament['name'])
@@ -24,7 +23,7 @@ class Device:
                      self._notification_service.get_service_name())
 
     @staticmethod
-    def new_notification_service(api_key, device_identifier, notification_service_name):
+    def new_notification_service(notification_service_name, device_identifier, api_key=''):
         if notification_service_name == 'Pushbullet':
             return PushbulletNotificationService(api_key, device_identifier)
         elif notification_service_name == 'Pushover':

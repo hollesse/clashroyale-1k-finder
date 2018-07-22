@@ -5,11 +5,13 @@ import logging
 
 class PushbulletNotificationService(NotificationService):
 
-    def get_service_name(self):
+    @staticmethod
+    def get_service_name():
         return 'Pushbullet'
 
     def __init__(self, api_key, device_identifier):
-        super().__init__(api_key, device_identifier)
+        super().__init__(device_identifier)
+        self._api_key = api_key
         self._notification_service = Pushbullet(self._api_key)
         self._device = self.get_device()
 
