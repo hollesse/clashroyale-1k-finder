@@ -27,18 +27,30 @@ class Config:
         count_devices = 0
         while True:
             try:
-                pushbullet_api_key = self._config.get('Devices', 'pushbullet_api_key_' + str(count_devices+1))
-                logging.debug('Reading Pushbullet api key: "%s"', pushbullet_api_key)
+                notification_service_name = self._config.get('Devices', 'notification_service_' + str(count_devices+1))
+                logging.debug('Reading notification service name: "%s" from config "%s"',
+                              notification_service_name,
+                              'notification_service_' + str(count_devices+1))
             except configparser.NoOptionError:
                 break
 
             try:
-                pushbullet_device_name = self._config.get('Devices', 'pushbullet_device_name_' + str(count_devices+1))
-                logging.info('Reading Pushbullet device name: "%s', pushbullet_device_name)
+                api_key = self._config.get('Devices', 'api_key_' + str(count_devices+1))
+                logging.debug('Reading api key: "%s" from config "%s"',
+                              api_key,
+                              'api_key_' + str(count_devices+1))
             except configparser.NoOptionError:
                 break
 
-            self._device_list.append(Device(pushbullet_api_key, pushbullet_device_name))
+            try:
+                device_identifier = self._config.get('Devices', 'device_identifier_' + str(count_devices+1))
+                logging.info('Reading device identifier: "%s from config "%s"',
+                             device_identifier,
+                             'device_identifier_' + str(count_devices + 1))
+            except configparser.NoOptionError:
+                break
+
+            self._device_list.append(Device(api_key, device_identifier, str(notification_service_name)))
             count_devices += 1
         logging.info('%s devices found!', count_devices)
 
