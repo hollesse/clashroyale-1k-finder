@@ -27,19 +27,20 @@ class Config:
         logging.debug('Reading ClashRoyale api key: "%s"', self._clashroyale_api_key)
 
     def __read_device_list(self):
-        count_devices = 0
+        device_number = 0
         while True:
+            device_number += 1
             try:
-                notification_service_name = self._config.get('Devices', 'notification_service_' + str(count_devices+1))
+                notification_service_name = self._config.get('Device_' + str(device_number), 'notification_service')
                 logging.debug('Reading notification service name: "%s" from config "%s"',
                               notification_service_name,
-                              'notification_service_' + str(count_devices+1))
-            except configparser.NoOptionError:
+                              'Device_' + str(device_number))
+            except configparser.NoSectionError:
                 break
             config_reader = self.get_config_reader(notification_service_name)
-            self._device_list.append(config_reader.get_device(count_devices+1))
-            count_devices += 1
-        logging.info('%s devices found!', count_devices)
+            self._device_list.append(config_reader.get_device(device_number))
+
+        logging.info('%s devices found!', device_number)
 
     def device_list(self):
         return self._device_list
