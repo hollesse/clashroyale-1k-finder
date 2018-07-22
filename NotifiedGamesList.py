@@ -31,20 +31,20 @@ class NotifiedGamesList:
 
     def __deserialize(self):
         if self._disable_cache:
+            return []
+
+        try:
+            with open(self._savefile, 'rb') as file:
+                notified_games_list = pickle.load(file)
+                logging.info('Imported already notified games from "%s"', self._savefile)
+                logging.debug('List of notified games: "%s"', notified_games_list)
+                return notified_games_list
+        except FileNotFoundError:
             self._notified_games_list = []
-        else:
-            try:
-                with open(self._savefile, 'rb') as file:
-                    notified_games_list = pickle.load(file)
-                    logging.info('Imported already notified games from "%s"', self._savefile)
-                    logging.debug('List of notified games: "%s"', notified_games_list)
-                    return notified_games_list
-            except FileNotFoundError:
-                self._notified_games_list = []
-                logging.info('File for import of already notified games not found! '
-                             'Expected file: "%s"', self._savefile)
-                self.serialize()
-                self._notified_games_list = []
+            logging.info('File for import of already notified games not found! '
+                         'Expected file: "%s"', self._savefile)
+            self.serialize()
+            return []
 
     def append(self, tag):
         self._notified_games_list.append(tag)
