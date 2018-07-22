@@ -1,5 +1,5 @@
-from ConfigReader import ConfigReader
-from PushbulletNotificationService import PushbulletNotificationService
+from NotificationsServices.ConfigReader import ConfigReader
+from NotificationsServices.Pushbullet.PushbulletNotificationService import PushbulletNotificationService
 
 
 class PushbulletConfigReader(ConfigReader):

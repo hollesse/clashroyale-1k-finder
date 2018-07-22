@@ -1,4 +1,4 @@
-from NotificationService import NotificationService
+from NotificationsServices.NotificationService import NotificationService
 from pushbullet.pushbullet import Pushbullet
 import logging
 
