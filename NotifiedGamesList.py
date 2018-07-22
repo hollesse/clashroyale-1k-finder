@@ -5,7 +5,8 @@ import logging
 
 class NotifiedGamesList:
 
-    def __init__(self, savefile_name):
+    def __init__(self, savefile_name, disable_cache=False):
+        self._disable_cache = disable_cache
         self._savefile = os.path.join(os.path.dirname(__file__), savefile_name)
         self._notified_games_list = self.__deserialize()
 
@@ -23,22 +24,27 @@ class NotifiedGamesList:
             logging.info('Removed %s tags from notified games list!', counter)
 
     def serialize(self):
-        with open(self._savefile, 'wb') as file:
-            pickle.dump(self._notified_games_list, file)
-            logging.info('Saved already notified games to "%s"', self._savefile)
+        if not self._disable_cache:
+            with open(self._savefile, 'wb') as file:
+                pickle.dump(self._notified_games_list, file)
+                logging.info('Saved already notified games to "%s"', self._savefile)
 
     def __deserialize(self):
-        try:
-            with open(self._savefile, 'rb') as file:
-                notified_games_list = pickle.load(file)
-                logging.info('Imported already notified games from "%s"', self._savefile)
-                logging.debug('List of notified games: "%s"', self._notified_games_list)
-                return notified_games_list
-        except FileNotFoundError:
+        if self._disable_cache:
             self._notified_games_list = []
-            logging.info('File for import of already notified games not found! '
-                         'Expected file: "%s"', self._savefile)
-            exit(1)
+        else:
+            try:
+                with open(self._savefile, 'rb') as file:
+                    notified_games_list = pickle.load(file)
+                    logging.info('Imported already notified games from "%s"', self._savefile)
+                    logging.debug('List of notified games: "%s"', notified_games_list)
+                    return notified_games_list
+            except FileNotFoundError:
+                self._notified_games_list = []
+                logging.info('File for import of already notified games not found! '
+                             'Expected file: "%s"', self._savefile)
+                self.serialize()
+                self._notified_games_list = []
 
     def append(self, tag):
         self._notified_games_list.append(tag)
