@@ -1,5 +1,5 @@
-from ConfigReader import ConfigReader
-from PushMeNotificationService import PushMeNotificationService
+from NotificationsServices.ConfigReader import ConfigReader
+from NotificationsServices.PushMe.PushMeNotificationService import PushMeNotificationService
 
 
 class PushMeConfigReader(ConfigReader):

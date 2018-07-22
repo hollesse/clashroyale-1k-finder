@@ -1,4 +1,4 @@
-from NotificationService import NotificationService
+from NotificationsServices.NotificationService import NotificationService
 import requests
 
 

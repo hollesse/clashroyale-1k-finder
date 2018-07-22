@@ -2,7 +2,7 @@ from ClashRoyaleOneKFinder import ClashRoyaleOneKFinder
 
 
 def main():
-    client = ClashRoyaleOneKFinder('clashroyale.cfg')
+    client = ClashRoyaleOneKFinder('clashroyale.cfg', debug=True)
     client.find_open_1k_tournaments()
 
 

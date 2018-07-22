@@ -1,5 +1,5 @@
-from ConfigReader import ConfigReader
-from PushoverNotificationService import PushoverNotificationService
+from NotificationsServices.ConfigReader import ConfigReader
+from NotificationsServices.Pushover.PushoverNotificationService import PushoverNotificationService
 
 
 class PushoverConfigReader(ConfigReader):

@@ -1,10 +1,9 @@
 import configparser as configparser
 import logging
 
-from Device import Device
-from PushMeConfigReader import PushMeConfigReader
-from PushbulletConfigReader import PushbulletConfigReader
-from PushoverConfigReader import PushoverConfigReader
+from NotificationsServices.PushMe.PushMeConfigReader import PushMeConfigReader
+from NotificationsServices.Pushbullet.PushbulletConfigReader import PushbulletConfigReader
+from NotificationsServices.Pushover.PushoverConfigReader import PushoverConfigReader
 
 
 class Config:

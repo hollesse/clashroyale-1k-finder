@@ -1,8 +1,8 @@
 import logging
 
-from PushMeNotificationService import PushMeNotificationService
-from PushbulletNotificationService import PushbulletNotificationService
-from PushoverNotificationService import PushoverNotificationService
+from NotificationsServices.PushMe.PushMeNotificationService import PushMeNotificationService
+from NotificationsServices.Pushbullet.PushbulletNotificationService import PushbulletNotificationService
+from NotificationsServices.Pushover.PushoverNotificationService import PushoverNotificationService
 
 
 class Device:

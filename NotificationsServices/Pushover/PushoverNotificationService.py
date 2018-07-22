@@ -1,4 +1,4 @@
-from NotificationService import NotificationService
+from NotificationsServices.NotificationService import NotificationService
 from pushover_complete import PushoverAPI
 
 
