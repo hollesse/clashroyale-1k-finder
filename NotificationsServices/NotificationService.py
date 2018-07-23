@@ -31,6 +31,3 @@ class NotificationService(object):
         :return: Name of the service which is implemented
         """
         raise NotImplementedError("Should have implemented this")
-
-
-

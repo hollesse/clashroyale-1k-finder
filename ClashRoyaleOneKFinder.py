@@ -43,5 +43,3 @@ class ClashRoyaleOneKFinder:
                     logging.debug('Added Tag "%s" to notified games list', tournament['tag'])
         self._notified_games.clean(one_k_tournaments)
         self._notified_games.serialize()
-
-
