@@ -1,12 +1,12 @@
-from NotificationsServices.ConfigReader import ConfigReader
-from NotificationsServices.Pushover.PushoverNotificationService import PushoverNotificationService
+from NotificationsServices.config_reader import ConfigReader
+from NotificationsServices.Pushover.pushover_notification_service import PushoverNotificationservice
 
 
 class PushoverConfigReader(ConfigReader):
 
     @staticmethod
     def get_notification_service_name():
-        return PushoverNotificationService.get_service_name()
+        return PushoverNotificationservice.get_service_name()
 
     @staticmethod
     def get_options():

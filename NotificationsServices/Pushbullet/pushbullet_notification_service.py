@@ -1,9 +1,9 @@
-from NotificationsServices.NotificationService import NotificationService
+from NotificationsServices.notification_service import NotificationService
 from pushbullet.pushbullet import Pushbullet
 import logging
 
 
-class PushbulletNotificationService(NotificationService):
+class PushbulletNotificationservice(NotificationService):
 
     @staticmethod
     def get_service_name():

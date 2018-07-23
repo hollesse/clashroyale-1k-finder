@@ -9,7 +9,7 @@ This is a python script, which looks for 1k tournaments on clashroyale and sends
 3. Verify that `python --version` shows a version equal to or higher then 3.5.3 Otherwise use [pyenv](https://github.com/pyenv/pyenv#installation) to install version 3.5.3
 4. `pip3 install -r requirements.txt`
 5. Copy `clashroyale.example.cfg` to `clashroyale.cfg` and adjust the config to your needs.
-6. run `python3 Main.py `
+6. run `python3 main.py `
 
 
 

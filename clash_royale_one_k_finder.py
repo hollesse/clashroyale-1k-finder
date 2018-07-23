@@ -1,8 +1,8 @@
 import clashroyale as clashroyale
 import logging
 
-from Config import Config
-from NotifiedGamesList import NotifiedGamesList
+from config import Config
+from notified_games_list import NotifiedGamesList
 
 
 class ClashRoyaleOneKFinder:
