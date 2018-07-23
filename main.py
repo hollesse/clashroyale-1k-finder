@@ -1,4 +1,4 @@
-from ClashRoyaleOneKFinder import ClashRoyaleOneKFinder
+from clash_royale_one_k_finder import ClashRoyaleOneKFinder
 
 
 def main():

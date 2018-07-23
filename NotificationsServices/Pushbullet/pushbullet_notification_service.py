@@ -1,6 +1,7 @@
-from NotificationsServices.notification_service import NotificationService
-from pushbullet.pushbullet import Pushbullet
 import logging
+from pushbullet.pushbullet import Pushbullet
+
+from NotificationsServices.notification_service import NotificationService
 
 
 class PushbulletNotificationservice(NotificationService):
@@ -26,7 +27,7 @@ class PushbulletNotificationservice(NotificationService):
                       'This is the device name specified in config: "%s"',
                       all_possible_devices,
                       self.device_identifier)
-        exit(1)
+        return None
 
     def send_test_notification(self):
         self._notification_service.push_note('Test', 'Test', device=self._device)

@@ -1,5 +1,5 @@
-import clashroyale as clashroyale
 import logging
+import clashroyale
 
 from config import Config
 from notified_games_list import NotifiedGamesList

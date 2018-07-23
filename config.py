@@ -1,9 +1,9 @@
-import configparser as configparser
+import configparser
 import logging
 
-from NotificationsServices.PushMe.PushMeConfigReader import PushMeConfigReader
-from NotificationsServices.Pushbullet.PushbulletConfigReader import PushbulletConfigReader
-from NotificationsServices.Pushover.PushoverConfigReader import PushoverConfigReader
+from NotificationsServices.PushMe.push_me_config_reader import PushMeConfigReader
+from NotificationsServices.Pushbullet.pushbullet_config_reader import PushbulletConfigReader
+from NotificationsServices.Pushover.pushover_config_reader import PushoverConfigReader
 
 
 class Config:
@@ -30,7 +30,8 @@ class Config:
         while True:
             device_number += 1
             try:
-                notification_service_name = self._config.get('Device_' + str(device_number), 'notification_service')
+                notification_service_name = self._config.get('Device_' + str(device_number),
+                                                             'notification_service')
                 logging.debug('Reading notification service name: "%s" from config "%s"',
                               notification_service_name,
                               'Device_' + str(device_number))
