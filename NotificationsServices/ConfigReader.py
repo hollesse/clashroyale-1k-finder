@@ -22,7 +22,7 @@ class ConfigReader(object):
         for key in options:
             try:
                 options_dict[key] = self._config.get('Device_' + str(device_number), key)
-                ConfigReader.log_read_option(key, options_dict['key'], device_number)
+                ConfigReader.log_read_option(key, options_dict[key], device_number)
             except configparser.NoOptionError:
                 ConfigReader.log_no_option_error(key, device_number)
                 exit(1)
