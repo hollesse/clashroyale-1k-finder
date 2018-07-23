@@ -12,7 +12,9 @@ class ConfigReader(object):
 
     def get_device(self, device_number):
         options_dict = self.read_config(device_number, self.get_options())
-        logging.debug('Try to get device for %s with following options: %s', self.get_notification_service_name(), options_dict)
+        logging.debug('Try to get device for %s with following options: %s',
+                      self.get_notification_service_name(),
+                      options_dict)
         return Device(self.get_notification_service_name(), options_dict)
 
     def read_config(self, device_number, options):
@@ -20,10 +22,7 @@ class ConfigReader(object):
         for key in options:
             try:
                 options_dict[key] = self._config.get('Device_' + str(device_number), key)
-                logging.debug('Reading %s: "%s" from config "%s"',
-                              key,
-                              options_dict[key],
-                              'Device_' + str(device_number))
+                ConfigReader.log_read_option(key, options_dict['key'], device_number)
             except configparser.NoOptionError:
                 ConfigReader.log_no_option_error(key, device_number)
                 exit(1)
@@ -41,4 +40,6 @@ class ConfigReader(object):
     def log_no_option_error(option, device_number):
         logging.error('Option "%s" missing in configuration for "%s"', option, 'Device_' + str(device_number))
 
-
+    @staticmethod
+    def log_read_option(key, option, device_number):
+        logging.debug('Reading %s: "%s" from config "%s"', key, option, 'Device_' + str(device_number))
