@@ -29,11 +29,20 @@ class ConfigReader(object):
         return options_dict
 
     @staticmethod
-    def get_options():
+    def get_options() -> list:
+        """
+        Returns a list of optionnames which should be specified in the configfile for a device that uses this service.
+        :return: list of optionnames
+        """
         raise NotImplementedError("Should have implemented this")
 
     @staticmethod
-    def get_notification_service_name():
+    def get_notification_service_name() -> str:
+        """
+        Returns the notification service name the config reader belongs to. Therefore the static method
+        get_notification_service_name() of the notification service should be used
+        :return: Name of the notification service the config reader belongs to as a string
+        """
         raise NotImplementedError("Should have implemented this")
 
     @staticmethod
