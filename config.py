@@ -40,7 +40,7 @@ class Config:
             config_reader = self.get_config_reader(notification_service_name)
             self._device_list.append(config_reader.get_device(device_number))
 
-        logging.info('%s devices found!', device_number)
+        logging.info('%s devices found!', device_number - 1)
 
     def device_list(self):
         return self._device_list
