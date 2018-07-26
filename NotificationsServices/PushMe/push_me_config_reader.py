@@ -9,8 +9,8 @@ class PushMeConfigReader(ConfigReader):
         return PushMeNotificationService.get_service_name()
 
     @staticmethod
-    def get_options():
+    def get_option_names():
         return ['device_identifier']
 
-    def __init__(self, config, use_notification_service_mock):
-        super().__init__(config, use_notification_service_mock)
+    def __init__(self, config):
+        super().__init__(config)

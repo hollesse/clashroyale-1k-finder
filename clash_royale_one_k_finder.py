@@ -1,38 +1,36 @@
 import logging
 import clashroyale
 
+import config
+
 from clashroyale_mock import ClashRoyaleMock
-from config import Config
+from device import Device
 from notified_games_list import NotifiedGamesList
 
 
 class ClashRoyaleOneKFinder:
 
-    def __init__(self,
-                 configfile_name,
-                 debug=False,
-                 disable_cache=False,
-                 use_clashroyale_mock=False,
-                 use_notification_service_mock=False):
-        if debug:
+    def __init__(self, configfile_name):
+        if config.Config.is_debug_mode(configfile_name):
             logging.basicConfig(level=logging.DEBUG,
                                 format='%(levelname)s: %(asctime)s: %(message)s')
         else:
             logging.basicConfig(level=logging.INFO,
                                 format='%(levelname)s: %(asctime)s: %(message)s')
-        logging.info('##### Started ClashRoyalOneKFinder #####')
-        self._debug = debug
-        self._disable_cache = disable_cache
-        self._config = Config(configfile_name, use_notification_service_mock)
-        if use_clashroyale_mock:
+        self._config = config.Config(configfile_name)
+        self._clashroyale_options_dict = self._config.get_clashroyale_options_dict()
+        self._developer_options_dict = self._config.get_developer_options_dict()
+        self._device_options_dict_list = self._config.get_device_options_dict_list()
+        if self._developer_options_dict['mock_clashroyale']:
             self._clashroyale = ClashRoyaleMock()
         else:
-            self._clashroyale = clashroyale.RoyaleAPI(self._config.clashroyale_api_key())
-        self._device_list = self._config.device_list()
-        self._notified_games = NotifiedGamesList('notified-games.pkl', disable_cache=disable_cache)
+            self._clashroyale = clashroyale.RoyaleAPI(self._config.get_clashroyale_options_dict()['clashroyale_api_key'])
+        self._device_list = self.__get_device_list()
+        self._notified_games = NotifiedGamesList('notified-games.pkl',
+                                                 disable_cache=self._developer_options_dict['disable_cache'])
 
-    def find_open_1k_tournaments(self):
-        if self._debug:
+    def find_open_1k_tournaments(self) -> None:
+        if self._developer_options_dict['debug']:
             one_k_tournaments = self._clashroyale.get_open_tournaments()
         else:
             one_k_tournaments = self._clashroyale.get_1k_tournaments()
@@ -52,3 +50,12 @@ class ClashRoyaleOneKFinder:
                     logging.debug('Added Tag "%s" to notified games list', tournament['tag'])
         self._notified_games.clean(one_k_tournaments)
         self._notified_games.serialize()
+
+    def __get_device_list(self) -> list:
+        device_list = []
+        for device_option_dict in self._device_options_dict_list:
+            device = Device(device_option_dict['notification_service_name'],
+                            device_option_dict['device_options'],
+                            self._developer_options_dict['mock_notification_services'])
+            device_list.append(device)
+        return device_list
