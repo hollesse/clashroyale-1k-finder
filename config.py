@@ -8,8 +8,9 @@ from NotificationsServices.Pushover.pushover_config_reader import PushoverConfig
 
 class Config:
 
-    def __init__(self, configfile_name):
+    def __init__(self, configfile_name, use_notification_service_mock):
         self._configfile_name = configfile_name
+        self._use_notification_service_mock = use_notification_service_mock
         self._config = configparser.ConfigParser()
         self._config.read(self._configfile_name)
         logging.info('Reading config file "%s"', self._configfile_name)
@@ -46,7 +47,7 @@ class Config:
         return self._device_list
 
     def get_config_reader(self, notification_service_name):
-        return {"Pushbullet": PushbulletConfigReader(self._config),
-                "Pushover": PushoverConfigReader(self._config),
-                "PushMe": PushMeConfigReader(self._config)
+        return {"Pushbullet": PushbulletConfigReader(self._config, self._use_notification_service_mock),
+                "Pushover": PushoverConfigReader(self._config, self._use_notification_service_mock),
+                "PushMe": PushMeConfigReader(self._config, self._use_notification_service_mock)
                 }.get(notification_service_name)

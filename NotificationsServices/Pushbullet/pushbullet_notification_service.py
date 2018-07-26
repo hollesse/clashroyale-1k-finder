@@ -4,7 +4,7 @@ from pushbullet.pushbullet import Pushbullet
 from NotificationsServices.notification_service import NotificationService
 
 
-class PushbulletNotificationservice(NotificationService):
+class PushbulletNotificationService(NotificationService):
 
     @staticmethod
     def get_service_name():

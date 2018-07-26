@@ -1,13 +1,19 @@
 import logging
 import clashroyale
 
+from clashroyale_mock import ClashRoyaleMock
 from config import Config
 from notified_games_list import NotifiedGamesList
 
 
 class ClashRoyaleOneKFinder:
 
-    def __init__(self, configfile_name, debug=False, disable_cache=False):
+    def __init__(self,
+                 configfile_name,
+                 debug=False,
+                 disable_cache=False,
+                 use_clashroyale_mock=False,
+                 use_notification_service_mock=False):
         if debug:
             logging.basicConfig(level=logging.DEBUG,
                                 format='%(levelname)s: %(asctime)s: %(message)s')
@@ -17,8 +23,11 @@ class ClashRoyaleOneKFinder:
         logging.info('##### Started ClashRoyalOneKFinder #####')
         self._debug = debug
         self._disable_cache = disable_cache
-        self._config = Config(configfile_name)
-        self._clashroyale = clashroyale.RoyaleAPI(self._config.clashroyale_api_key())
+        self._config = Config(configfile_name, use_notification_service_mock)
+        if use_clashroyale_mock:
+            self._clashroyale = ClashRoyaleMock()
+        else:
+            self._clashroyale = clashroyale.RoyaleAPI(self._config.clashroyale_api_key())
         self._device_list = self._config.device_list()
         self._notified_games = NotifiedGamesList('notified-games.pkl', disable_cache=disable_cache)
 

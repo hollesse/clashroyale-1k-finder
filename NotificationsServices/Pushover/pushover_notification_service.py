@@ -2,7 +2,7 @@ from NotificationsServices.notification_service import NotificationService
 from pushover_complete import PushoverAPI
 
 
-class PushoverNotificationservice(NotificationService):
+class PushoverNotificationService(NotificationService):
 
     def __init__(self, api_key, device_identifier):
         super().__init__(device_identifier)

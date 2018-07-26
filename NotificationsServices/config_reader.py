@@ -8,15 +8,16 @@ class ConfigReader:
     """Abstract Class which should be used to implement the reading
     of the config for different notification services"""
 
-    def __init__(self, config):
+    def __init__(self, config, use_notification_service_mock):
         self._config = config
+        self._use_notification_service_mock = use_notification_service_mock
 
     def get_device(self, device_number):
         options_dict = self.read_config(device_number, self.get_options())
         logging.debug('Try to get device for %s with following options: %s',
                       self.get_notification_service_name(),
                       options_dict)
-        return Device(self.get_notification_service_name(), options_dict)
+        return Device(self.get_notification_service_name(), options_dict, self._use_notification_service_mock)
 
     def read_config(self, device_number, options):
         options_dict = {}

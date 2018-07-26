@@ -3,7 +3,7 @@ import requests
 from NotificationsServices.notification_service import NotificationService
 
 
-class PushMeNotificationservice(NotificationService):
+class PushMeNotificationService(NotificationService):
 
     def __init__(self, device_identifier):
         super().__init__(device_identifier)
